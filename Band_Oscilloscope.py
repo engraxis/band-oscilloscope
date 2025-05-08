@@ -1,12 +1,11 @@
 # Abdullah Tahir atah@es.aau.dk
-# 06 May 2025
 
 # View the serial ports using terminal ls /dev/tty.*
 
 import serial
 import threading
 import matplotlib
-matplotlib.use('QtAgg')  # Switch to TkAgg backend
+matplotlib.use('QtAgg')  # This backend will allow to have the title of the figure.
 import matplotlib.pyplot as plt
 from collections import deque
 import numpy as np
@@ -16,17 +15,21 @@ import time
 # ESP's serial port
 esp_port = '/dev/tty.usbserial-0001'
 
-# Global variables
+# Global standard variables.
 num_fsrs = 8
 num_IMUs = 3
 data_length = 140
+
+# Data containers for the respective data type:
 fsr_queue = deque([np.zeros(num_fsrs) for _ in range(data_length)], maxlen=data_length)
 euler_queue = deque([np.zeros(num_IMUs) for _ in range(data_length)], maxlen=data_length)
 gravity_queue = deque([np.zeros(num_IMUs) for _ in range(data_length)], maxlen=data_length)
 gyro_queue = deque([np.zeros(num_IMUs) for _ in range(data_length)], maxlen=data_length)
 acc_queue = deque([np.zeros(num_IMUs) for _ in range(data_length)], maxlen=data_length)
+
 stop_threads = False
 data_lock = threading.Lock()
+
 print('[Info] Press Esc button to close the program.')
 
 band_id = 'z'
@@ -35,8 +38,13 @@ while band_id != 's' and band_id != 't':
     band_id = band_id.lower()
 
 
-# Function to read data from the serial port
 def read_serial_data():
+    """
+    Function reads the data from the serial port and extracts respective components of data.
+    Runs the thread to continuously read the serial port.
+    Data is added in the queue with the data_lock.
+    :return: nothing
+    """
     global stop_threads
     try:
         ser = serial.Serial(esp_port, 230400)
@@ -65,7 +73,6 @@ def read_serial_data():
             euler = [float(x) for x in data[22:25]]  # Yaw, Roll, Pitch
             euler = [euler[2], euler[1], euler[0]]  # X [-180, 180], Y [-90, 90], Z [0, 360]
 
-
             with data_lock:
                 fsr_queue.append(np.array(fsr))
                 gravity_queue.append(np.array(gravity))
@@ -77,6 +84,13 @@ def read_serial_data():
 
 
 def plot_data():
+    """
+    Function plots the FMG data on the subplot (0, 0), Gyroscope plot on (0, 1)
+                    Euler XYZ angles on (1, 0), and Accelerometer plot on (1, 1)
+    Function is optimized for fast plotting since all the axes and data handling is done before the thread.
+    The thread only updates the lines and texts using set_line() and set_text() functions.
+    :return:
+    """
     plt.ion()
     plt.grid(True)
     # Following grid is created:
@@ -152,9 +166,12 @@ def plot_data():
         plt.pause(0.01)
 
 
-# Start the threads
+
 def start_threads():
-    # Create and start the serial reading thread
+    """
+    Create and start the serial reading thread
+    :return:
+    """
     serial_thread = threading.Thread(target=read_serial_data)
     serial_thread.daemon = True
     serial_thread.start()
