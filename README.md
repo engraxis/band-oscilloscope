@@ -19,11 +19,12 @@ This file receives data from ESP chip serially and plots IMU and FMG data. Teste
 2. To view the available serial ports, open terminal and run following command:
 ls /dev/tty.*
 
-# Receiver firmware
+# Firmware Codes
+## Receiver firmware
 The ESP connected with PC is named as receiver.
 - Open VS Code on windows PC to upload the firmware to the device.
 - Change the sender's address in the receiver code.
 - Change the receiver's address in the band(s).
 
-# Sender firmware
+## Sender firmware
 The BioX band is named as sender.
