@@ -10,3 +10,9 @@ Force myography (FMG) is a method to register the changes in the mechanical acti
 
 # Band Oscilloscope
 This file receives data from ESP chip serially and plots IMU and FMG data. Tested on MacOS.
+
+# Setup on MacOS
+1. Install PySerial library.
+
+2. To view the available serial ports, open terminal and run following command:
+ls /dev/tty.*
