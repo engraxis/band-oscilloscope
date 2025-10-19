@@ -7,11 +7,11 @@ Force myography (FMG) is a method to register the changes in the mechanical acti
 # Using FMG Oscilloscope
 (File: FMG_Oscilloscope.py) The data from two BioX FMG bands is acquired by an ESP32 chip over esp-now library. This ESP32 chip's serial port name is manually configured in the code. <br>
 (File: serial_interface_macOS.py) This files records data and saves the csv formateed data file from two bands and also serves as trigger to start/stop EMG and vision data from Delsys and Qualisys system, respectively.
-![Logo](images/fmg_oscilloscope.png)
+![Logo](images/FMG_oscilloscope.png)
 
 # Band Oscilloscope
 This file receives data from ESP chip serially and plots IMU and FMG data. Tested on MacOS.
-![Logo](images/BioX_Band_Oscilloscope.png)
+![Logo](images/BioX_oscilloscope.png)
 
 # Setup on MacOS
 1. Install PySerial library.
