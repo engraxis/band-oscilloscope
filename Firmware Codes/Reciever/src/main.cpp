@@ -1,3 +1,6 @@
+// Copyright (c) 2025 Abdullah Tahir
+// Licensed under the MIT License. See LICENSE file in the project root for details.
+
 # define DEBUG
 
 #include <Arduino.h>
@@ -162,4 +165,5 @@ void loop(){
         Serial.println(totalData[i].IMU16);
       }
   }
+
 }
