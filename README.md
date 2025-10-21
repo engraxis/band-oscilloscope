@@ -16,8 +16,9 @@ This file receives data from ESP chip serially and plots IMU and FMG data. Teste
 # Setup on MacOS
 1. Install PySerial library.
 
-2. To view the available serial ports, open terminal and run following command:
-ls /dev/tty.*
+2. To view the available serial ports, open terminal and run the command: ls /dev/tty.*
+
+3. Configure the name of serial port in the .py file.
 
 # Firmware Codes
 ## Receiver firmware
